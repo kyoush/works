@@ -1,0 +1,14 @@
+clear
+close all force
+
+v = get(0, 'MonitorPosition');
+XMIN = v(3) * 0.1;
+YMIN = v(4) * 0.1;
+WIDTH = v(3) * 0.6;
+HEIGHT = WIDTH * 4.5;
+pos = [XMIN YMIN WIDTH HEIGHT];
+
+H0 = figure('Pos', pos,...
+    'Color', [0 0 0],...
+    'NumberTitle',  'off',...
+    'Name', 'Sound Localizatio
