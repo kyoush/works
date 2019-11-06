@@ -1,8 +1,6 @@
 clear
 close all force
 
-
-
 v = get(0, 'MonitorPosition');
 XMIN = v(3) * 0.1;
 YMIN = v(4) * 0.1;
@@ -28,4 +26,4 @@ B_start = uicontrol(H0,...
     'FontName', 'Arial',...
     'FontSize', 16,...
     'Position', [XMIN*0.3 YMIN*0.2 WIDTH*0.08 HEIGHT*0.04],...
-    'Callback', 'start;');
+    'Callback', 'pos = start(h);');

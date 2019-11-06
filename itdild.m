@@ -17,7 +17,6 @@ save = [];
 filter = dsp.FIRFilter();
 length_coeff = 50;
 tmp = 0;
-disp('test')
 if waveform == 1
     while(isDone(fileReader) == 0 && stop.Value == 0)
         if h.Selected == 1
@@ -55,28 +54,22 @@ if waveform == 1
         end
         
         %% ILD
-        const = 10^(abs(db.Value)/10);
-        const2 = 10^(abs(db.Value)/60);
-        if db.Value < 0
-            sig(:, 1) = sig(:, 1) .* const2;
-            sig(:, 2) = sig(:, 2) ./ const;
-        else
-            sig(:, 1) = sig(:, 1) ./ const;
-            sig(:, 2) = sig(:, 2) .* const2;
-        end
+        ild = db.Value;
+        r = (2 * 10^(ild/20))/(1 + 10^(ild/20));
+        l = 2 / (1 + 10^(ild/20));
+        sig(:, 1) = sig(:, 1) .* l;
+        sig(:, 2) = sig(:, 2) .* r;
         
         %% update label
         l_pow = rms(sig(:, 1));
         r_pow = rms(sig(:, 2));
-        a = 20 * log10(l_pow/r_pow);
+        a = 20 * log10(r_pow/l_pow);
 
         ildlabel.Text = [num2str(round(a)) ' [dB]'];
 
         a = sign(delta.Value) * (tau/Fs)*10^6;
 
         itdlabel.Text = [num2str(round(a)) ' [ƒÊs]'];
-
-        max(sig)
         aDW(sig);
     end
 else
