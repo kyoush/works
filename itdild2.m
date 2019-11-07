@@ -1,6 +1,5 @@
-function itdild(db, delta, ildlabel, itdlabel, stop, waveform)
-global h
-global plt
+function itdild2(db, delta, ildlabel, itdlabel, stop, waveform)
+
 frame_length = 2048;
 Fs = 44100;
 fileReader = dsp.AudioFileReader(...
@@ -12,24 +11,12 @@ cn = dsp.ColoredNoise(...
     'Color', 'white',...
     'SamplesPerFrame', frame_length);
 flag = 1;
-pos = h.Center;
 save = [];
 filter = dsp.FIRFilter();
 length_coeff = 50;
 tmp = 0;
 if waveform == 1
     while(isDone(fileReader) == 0 && stop.Value == 0)
-        if h.Selected == 1
-            pos_old = pos;
-            pos = h.Center;
-            if pos_old == pos
-                save = [save; pos];
-                disp(pos)
-                disp(db.Value)
-                disp(delta.Value)
-                h.Selected = 0;
-            end
-        end
         noise = fileReader();
 %         noise = cn();
 %         noise = wgn(1, frame_length, 1);
