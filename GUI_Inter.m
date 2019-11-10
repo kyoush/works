@@ -10,10 +10,11 @@ close all force
 
 v = get(0, 'MonitorPosition');
 
-X_MIN = v(3) * 0.01;
-Y_MIN = v(4) * 0.1;
-WIDTH = 600;
+WIDTH = 750;
 HEIGHT = 300;
+X_MIN = v(3) - WIDTH * 2.5;
+Y_MIN = v(4) - HEIGHT * 3;
+
 Figure_position = [X_MIN Y_MIN WIDTH HEIGHT];
 color = [0.6 0.7 1];
 waveform = 1;
@@ -88,12 +89,12 @@ button_keep = uibutton(H0, 'state',...
 
 %% ƒXƒ‰ƒCƒ_
 sld_ild = uislider(H0,...
-    'Position', [WIDTH/2-250 HEIGHT-80 500 3],...
-    'Limits', [-20 20]);
+    'Position', [WIDTH/2-320 HEIGHT-80 640 3],...
+    'Limits', [-40 40]);
 
 sld_itd = uislider(H0,...
-    'Position', [WIDTH/2-250 HEIGHT-170 500 3],...
-    'Limits', [-1000 1000],...
+    'Position', [WIDTH/2-320 HEIGHT-170 650 3],...
+    'Limits', [-1700 1700],...
     'ValueChangingFcn',@(sld_itd, event) updatesld_ild(button_keep, sld_itd, sld_ild, event));
 
 sld_ild.ValueChangingFcn = @(sld_ild,event) updatesld_itd(button_keep, sld_itd, sld_ild, event);

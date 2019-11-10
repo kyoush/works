@@ -1,6 +1,7 @@
 function play_itdild(ild, itd)
-T = 2.5;
-fl = 2048;
+T = 3.42;
+fl = 4096;
+w = 3000;
 
 fileReader = dsp.AudioFileReader(...
     'whitenoise.wav',...
@@ -12,15 +13,19 @@ tau = round(abs(itd) * Fs * 0.000001);
 length_coeff = 50;
 filter = dsp.FIRFilter(...
     'Numerator', [zeros(1, tau) 1 zeros(1, length_coeff-tau-1)]);
-flag = 1;
 for i = 1:Fs*T/fl
     noise = fileReader();
-    if flag == 1
-        for j = 1:2000
-            noise(i) = noise(i) * (i/2000);
+    if i == 1
+        for j = 1:w
+            noise(j) = noise(j) * (j/w);
         end
-        flag = 0;
     end
+    if i == fix(Fs*T/fl)
+        for j = w:-1:1
+            noise(fl-j+1) = noise(fl-j+1) .* (j/w);
+        end
+    end
+        
     if itd > 0
         sig = [filter(noise) noise];
     else
@@ -33,4 +38,7 @@ for i = 1:Fs*T/fl
     
     aDW(sig);
 end
+release(fileReader)
+release(aDW)
+release(filter)
 end

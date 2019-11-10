@@ -3,7 +3,7 @@ global i
 global ild
 global itd
 global order
-c = 0.7;
+c = 0.1;
 if itdild_select == 1
     if i < 6
         if i < 3
