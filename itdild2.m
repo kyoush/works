@@ -43,9 +43,15 @@ if waveform == 1
         end
         
         %% ILD
-        ild = db.Value;
-        r = (2 * 10^(ild/20))/(1 + 10^(ild/20));
-        l = 2 / (1 + 10^(ild/20));
+        if db.Value == 40
+            c = inf;
+        elseif db.Value == -40
+            c = -inf;
+        else
+            c = db.Value;
+        end
+        r = (2 .* 10.^(c./20))./(1 + 10.^(c./20));
+        l = 2 ./ (1 + 10.^(c./20));
         sig(:, 1) = sig(:, 1) .* l;
         sig(:, 2) = sig(:, 2) .* r;
         
@@ -113,4 +119,5 @@ release(fileReader)
 a = size(save);
 for i = 1:a(1)
     plt(i) = plot(save(i, 1), save(i, 2), 'b.', 'MarkerSize', 100);
+end
 end

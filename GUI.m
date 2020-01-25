@@ -80,7 +80,7 @@ sld_ild = uislider(H0,...
 
 sld_itd = uislider(H0,...
     'Position', [WIDTH/2-250 HEIGHT-170 500 3],...
-    'Limits', [-1000 1000],...
+    'Limits', [-1500 1500],...
     'ValueChangingFcn',@(sld_itd, event) updatesld_ild(button_keep, sld_itd, sld_ild, event));
 
 sld_ild.ValueChangingFcn = @(sld_ild,event) updatesld_itd(button_keep, sld_itd, sld_ild, event);
@@ -105,12 +105,17 @@ button_play = uibutton(H0,...
     'Position', [WIDTH-590 HEIGHT-60 80 30],...
     'Text', 'Play',...
     'ButtonPushedFcn',@(button_play, event) itdild(sld_ild, sld_itd, label5, label6, button_stop, evalin('base', 'waveform')));
+%% 決定
+% button_decide = uibutton(H0,...
+%     'Position', [WIDTH-400 HEIGHT-60 80 30],...
+%     'Text', '決定');
 %% Answer Figure
-XMIN = v(3) * 0.49;
-YMIN = v(4) * 0.1;
-WIDTH = v(3) * 0.5;
-HEIGHT = WIDTH * 4 / 5;
-figpos = [XMIN YMIN WIDTH HEIGHT];
+% XMIN = v(3) * 0.49;
+% YMIN = v(4) * 0.1;
+% WIDTH = v(3) * 0.5;
+% HEIGHT = WIDTH * 4 / 5;
+figpos = [1000 200 850 0];
+figpos(4) = figpos(3) * 4 / 5;
 global flag
 global plt
 global store
@@ -135,8 +140,9 @@ h = images.roi.Circle(gca, 'Center', [448 380], 'Radius', 50, 'FaceAlpha', 1);
 
 %% Bothボタンが押されたとき、itdのスライダも同時に動かす関数
 function updatesld_itd(keep, sld_itd, sld_ild, event)
+
 if keep.Value == 1
-    sld_itd.Value = event.Value * 50;
+    sld_itd.Value = event.Value * sld_itd.Limits(2) / sld_ild.Limits(2);
     sld_ild.Value = event.Value;
 else
     sld_ild.Value = event.Value;
@@ -146,7 +152,7 @@ end
 %% Bothボタンが押されたとき、ildのスライダも同時に動かす関数
 function updatesld_ild(keep, sld_itd, sld_ild, event)
 if keep.Value == 1
-    sld_ild.Value = event.Value * 0.02;
+    sld_ild.Value = event.Value * sld_ild.Limits(2) / sld_itd.Limits(2);
     sld_itd.Value = event.Value;
 else
     sld_itd.Value = event.Value;
